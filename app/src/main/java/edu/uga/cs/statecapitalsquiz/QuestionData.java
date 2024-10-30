@@ -40,7 +40,7 @@ public class QuestionData {
         return db.isOpen();
     }
 
-    public List<Question> retrieveAllQuestions() {
+    public List<Question> retrieveSixQuestions() {
         ArrayList<Question> questions = new ArrayList<>();
         Cursor cursor = null;
         int columnIndex;
@@ -50,7 +50,7 @@ public class QuestionData {
             cursor = db.query(QuestionDBHelper.TABLE_QUESTIONS, allColumns,
                     null, null, null, null, null );
 
-            // collect all job leads into a List
+            // Needs randomization for the six questions
             if( cursor != null && cursor.getCount() > 0 ) {
 
                 while( cursor.moveToNext() ) {

@@ -7,7 +7,7 @@ import android.util.Log;
 
 public class QuestionDBHelper extends SQLiteOpenHelper {
 
-    public static final String DB_NAME = "questions";
+    public static final String DB_NAME = "questions.db";
     private static final int DB_VERSION = 1;
 
     public static final String TABLE_QUESTIONS = "questions";
@@ -43,8 +43,8 @@ public class QuestionDBHelper extends SQLiteOpenHelper {
     // It is synchronized, so that only one thread can executes this method, at a time.
     public static synchronized QuestionDBHelper getInstance(Context context) {
         // check if the instance already exists and if not, create the instance
-        if( helperInstance == null ) {
-            helperInstance = new QuestionDBHelper( context.getApplicationContext() );
+        if(helperInstance == null) {
+            helperInstance = new QuestionDBHelper(context.getApplicationContext());
         }
         return helperInstance;
     }
@@ -52,7 +52,7 @@ public class QuestionDBHelper extends SQLiteOpenHelper {
     // We must override onCreate method, which will be used to create the database if
     // it does not exist yet.
     @Override
-    public void onCreate( SQLiteDatabase db ) {
+    public void onCreate(SQLiteDatabase db) {
         db.execSQL(CREATE_QUESTIONS);
     }
 
@@ -60,7 +60,7 @@ public class QuestionDBHelper extends SQLiteOpenHelper {
     // its version (DB_VERSION) has changed.  This will be done automatically by Android
     // if the version will be bumped up, as we modify the database schema.
     @Override
-    public void onUpgrade( SQLiteDatabase db, int oldVersion, int newVersion ) {
+    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("drop table if exists " + TABLE_QUESTIONS);
         onCreate(db);
     }
