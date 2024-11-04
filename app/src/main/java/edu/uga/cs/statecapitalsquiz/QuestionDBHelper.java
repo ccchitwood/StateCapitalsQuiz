@@ -53,6 +53,7 @@ public class QuestionDBHelper extends SQLiteOpenHelper {
     // it does not exist yet.
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Log.d("DBHelper", "Creating database/table");
         db.execSQL(CREATE_QUESTIONS);
     }
 
