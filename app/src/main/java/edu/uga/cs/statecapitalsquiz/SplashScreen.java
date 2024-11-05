@@ -1,6 +1,5 @@
 package edu.uga.cs.statecapitalsquiz;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,14 +26,14 @@ public class SplashScreen extends AppCompatActivity {
         questionData.open();
 
         Button startQuizButton = findViewById(R.id.button);
-        Button viewPastQuizzesButton = findViewById(R.id.button2);
+        Button pastQuizzesButton = findViewById(R.id.button2);
         startQuizButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 new QuestionLoader(questionData).execute();
             }
         });
-        viewPastQuizzesButton.setOnClickListener(new View.OnClickListener() {
+        pastQuizzesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // filler

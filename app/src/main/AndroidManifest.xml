@@ -25,7 +25,10 @@
             android:name=".MainActivity"
             android:exported="true">
         </activity>
-
+        <activity
+            android:name=".EndScreen"
+            android:exported="true">
+        </activity>
 
     </application>
 
