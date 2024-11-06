@@ -13,6 +13,9 @@
         android:theme="@style/Theme.StateCapitalsQuiz"
         tools:targetApi="31">
         <activity
+            android:name=".ViewResults"
+            android:exported="false" />
+        <activity
             android:name=".SplashScreen"
             android:exported="true">
             <intent-filter>
@@ -23,13 +26,10 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".EndScreen"
-            android:exported="true">
-        </activity>
-
+            android:exported="true"></activity>
     </application>
 
 </manifest>
