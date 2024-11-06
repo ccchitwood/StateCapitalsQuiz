@@ -2,17 +2,24 @@ package edu.uga.cs.statecapitalsquiz;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.opencsv.CSVReader;
+
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
 public class EndScreen extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.end_screen);
+
         Button retryQuizButton = findViewById(R.id.button3);
         Button pastQuizzesButton = findViewById(R.id.button4);
         TextView quizScore = findViewById(R.id.textView5);
@@ -43,5 +50,34 @@ public class EndScreen extends AppCompatActivity {
                 // filler
             }
         });
+    }
+
+    public class ResultSaver extends AsyncTask<History, History> {
+
+        private HistoryData historyData;
+        private int score;
+
+        public ResultSaver(HistoryData historyData, int score) {
+            this.historyData = historyData;
+            this.score = score;
+        }
+
+        protected History doInBackground(History... histories) {
+
+            History history = new History();
+            int currentDate = (int) (System.currentTimeMillis() / 1000);
+            history.setDate(currentDate);
+            history.setScore(score);
+            historyData.storeResults(history);
+
+            return new History();
+        }
+
+        // CHANGE THIS
+        protected void onPostExecute (History history) {
+            Intent intent = new Intent(EndScreen.this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 }
