@@ -60,13 +60,13 @@ public class QuizQuestionFragment extends Fragment {
 
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState ) {
         super.onViewCreated(view, savedInstanceState);
-        // open the database
+        // Open the database
         QuestionData questionData = new QuestionData(getActivity());
         questionData.open();
         List<Question> questionList = questionData.retrieveAllQuestions();
         Log.w("Size of question list", questionList.size() + "");
 
-        // select question
+        // Select question
         Random random = new Random();
         int randomInt = random.nextInt(questionList.size());
         while (usedQuestions.contains(randomInt)) {
@@ -75,7 +75,7 @@ public class QuizQuestionFragment extends Fragment {
         usedQuestions.add(randomInt);
         Question chosenQuestion = questionList.get(randomInt);
         String correctAnswer = chosenQuestion.getAnswer1();
-        // set textview and radio button text
+        // Set TextView and Radio button text
         stateQuestion = getView().findViewById( R.id.textView3 );
         stateQuestion.setText("What is the capital of " + chosenQuestion.getState() + "?");
 
@@ -84,8 +84,8 @@ public class QuizQuestionFragment extends Fragment {
         answers.add(chosenQuestion.getAnswer2());
         answers.add(chosenQuestion.getAnswer3());
 
+        // Randomizing order in which answers appear
         Collections.shuffle(answers);
-
 
         answerOne = getView().findViewById(R.id.radioButton);
         answerTwo = getView().findViewById(R.id.radioButton2);
@@ -114,15 +114,15 @@ public class QuizQuestionFragment extends Fragment {
             if (viewPager != null) {
                 int nextPosition = viewPager.getCurrentItem() + 1;
                 if (nextPosition == 6) {
-                    // open results database for saving
+                    // Open results database for saving
                     historyData = new HistoryData(getActivity());
                     historyData.open();
 
                     new ResultSaver(historyData, correctAnswerCount).execute();
                 }
-                viewPager.setCurrentItem(nextPosition, true);  // true for smooth scrolling
+                viewPager.setCurrentItem(nextPosition, true);
             }
-        }, 1500); // Delay in milliseconds (1.5 seconds)
+        }, 1500); // 1.5 second delay for users to see if they were correct or incorrect
     }
 
     public static int getNumberOfVersions() { return 6; }

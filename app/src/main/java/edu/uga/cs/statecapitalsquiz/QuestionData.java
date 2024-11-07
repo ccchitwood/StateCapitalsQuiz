@@ -57,7 +57,7 @@ public class QuestionData {
 
                     if( cursor.getColumnCount() >= 5) {
 
-                        // get all attribute values of this job lead
+                        // Get all the attributes of this question
                         columnIndex = cursor.getColumnIndex(QuestionDBHelper.QUESTIONS_COLUMN_ID );
                         long id = cursor.getLong( columnIndex );
                         columnIndex = cursor.getColumnIndex(QuestionDBHelper.QUESTIONS_COLUMN_STATE);
@@ -69,10 +69,10 @@ public class QuestionData {
                         columnIndex = cursor.getColumnIndex(QuestionDBHelper.QUESTIONS_COLUMN_ANSWER3);
                         String answer3 = cursor.getString( columnIndex );
 
-                        // create a new JobLead object and set its state to the retrieved values
+                        // Create a new Question object
                         Question question = new Question(state, answer1, answer2, answer3);
-                        question.setId(id); // set the id (the primary key) of this object
-                        // add it to the list
+                        question.setId(id); // Set the id of the Question object
+                        // Add it to the question database
                         questions.add(question);
                     }
                 }
@@ -83,19 +83,19 @@ public class QuestionData {
             Log.d("Exception", "Exception caught");
         }
         finally{
-            // we should close the cursor
+            // Closing the cursor
             if (cursor != null) {
                 cursor.close();
             }
         }
-        // return a list of retrieved job leads
+        // Return a list of all questions
         return questions;
     }
 
     public Question storeQuestion( Question question ) {
 
         // Prepare the values for all of the necessary columns in the table
-        // and set their values to the variables of the JobLead argument.
+        // and set their values to the variables of the Question argument.
         // This is how we are providing persistence to a JobLead (Java object) instance
         // by storing it as a new row in the database table representing job leads.
         ContentValues values = new ContentValues();
@@ -109,7 +109,7 @@ public class QuestionData {
         // and returned as from the insert method call.
         long id = db.insert(QuestionDBHelper.TABLE_QUESTIONS, null, values);
 
-        // store the id (the primary key) in the JobLead instance, as it is now persistent
+        // Store the id (the primary key) in the Question instance, as it is now persistent
         question.setId(id);
 
         return question;

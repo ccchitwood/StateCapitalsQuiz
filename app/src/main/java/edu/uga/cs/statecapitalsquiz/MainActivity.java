@@ -21,7 +21,7 @@ public class MainActivity extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        // Sets up question viewpager
+        // Sets up question ViewPager
         ViewPager2 pager = findViewById(R.id.viewpager);
         QuizQuestionPagerAdapter qqpAdapter = new QuizQuestionPagerAdapter(
                 getSupportFragmentManager(), getLifecycle());

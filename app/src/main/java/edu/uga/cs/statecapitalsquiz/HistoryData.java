@@ -54,18 +54,18 @@ public class HistoryData {
 
                     if( cursor.getColumnCount() >= 3) {
 
-                        // get all attribute values of this job lead
-                        columnIndex = cursor.getColumnIndex(HistoryDBHelper.HISTORY_COLUMN_ID );
+                        // Get all the attributes of this quiz
+                        columnIndex = cursor.getColumnIndex(HistoryDBHelper.HISTORY_COLUMN_ID);
                         long id = cursor.getLong( columnIndex );
                         columnIndex = cursor.getColumnIndex(HistoryDBHelper.HISTORY_COLUMN_DATE);
                         int date = cursor.getInt( columnIndex );
                         columnIndex = cursor.getColumnIndex(HistoryDBHelper.HISTORY_COLUMN_SCORE);
                         int score = cursor.getInt( columnIndex );
 
-                        // create a new JobLead object and set its state to the retrieved values
+                        // Create a new History object
                         History history = new History(date, score);
-                        history.setId(id); // set the id (the primary key) of this object
-                        // add it to the list
+                        history.setId(id); // Set the id of the history object
+                        // Add it to the quiz history database
                         histories.add(history);
                     }
                 }
@@ -76,20 +76,20 @@ public class HistoryData {
             Log.d("Exception", "Exception caught");
         }
         finally{
-            // we should close the cursor
+            // Closing the cursor
             if (cursor != null) {
                 cursor.close();
             }
         }
-        // return a list of retrieved job leads
+        // Return a list of all completed quizzes
         return histories;
     }
 
-    public History storeResults( History history ) {
+    public History storeResults(History history) {
 
         // Prepare the values for all of the necessary columns in the table
-        // and set their values to the variables of the JobLead argument.
-        // This is how we are providing persistence to a JobLead (Java object) instance
+        // and set their values to the variables of the History argument.
+        // This is how we are providing persistence to a History (Java object) instance
         // by storing it as a new row in the database table representing job leads.
         ContentValues values = new ContentValues();
         values.put(HistoryDBHelper.HISTORY_COLUMN_DATE, history.getDate());
@@ -100,7 +100,7 @@ public class HistoryData {
         // and returned as from the insert method call.
         long id = db.insert(HistoryDBHelper.TABLE_HISTORY, null, values);
 
-        // store the id (the primary key) in the JobLead instance, as it is now persistent
+        // Store the id (the primary key) in the History instance, as it is now persistent
         history.setId(id);
 
         return history;
