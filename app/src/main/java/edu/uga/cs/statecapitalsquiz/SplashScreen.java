@@ -12,6 +12,7 @@ import com.opencsv.CSVReader;
 
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.List;
 
 public class SplashScreen extends AppCompatActivity {
 
@@ -36,7 +37,9 @@ public class SplashScreen extends AppCompatActivity {
         pastQuizzesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // filler
+                Intent intent = new Intent(SplashScreen.this, ViewResults.class);
+                startActivity(intent);
+                finish();
             }
         });
     }
@@ -58,23 +61,26 @@ public class SplashScreen extends AppCompatActivity {
         }
 
         protected Question doInBackground(Question... questions) {
-            try {
-                InputStream inputStream = getAssets().open("state_capitals.csv");
-                CSVReader reader = new CSVReader(new InputStreamReader(inputStream));
-                String[] nextRow;
-                reader.readNext();
-                while ((nextRow = reader.readNext()) != null) {
-                    Question question = new Question();
-                    question.setState(nextRow[0]);
-                    question.setAnswer1(nextRow[1]);
-                    question.setAnswer2(nextRow[2]);
-                    question.setAnswer3(nextRow[3]);
+            List<Question> questionList = questionData.retrieveAllQuestions();
+            if (questionList.isEmpty()) {
+                try {
+                    InputStream inputStream = getAssets().open("state_capitals.csv");
+                    CSVReader reader = new CSVReader(new InputStreamReader(inputStream));
+                    String[] nextRow;
+                    reader.readNext();
+                    while ((nextRow = reader.readNext()) != null) {
+                        Question question = new Question();
+                        question.setState(nextRow[0]);
+                        question.setAnswer1(nextRow[1]);
+                        question.setAnswer2(nextRow[2]);
+                        question.setAnswer3(nextRow[3]);
 
-                    questionData.storeQuestion(question);
+                        questionData.storeQuestion(question);
+                    }
+                    reader.close();
+                } catch (Exception e) {
+                    Log.e("InputStream Error", "Exception in Reading CSV File");
                 }
-                reader.close();
-            } catch (Exception e) {
-                Log.e("InputStream Error","Exception in Reading CSV File");
             }
             return new Question();
         }
@@ -85,5 +91,4 @@ public class SplashScreen extends AppCompatActivity {
             finish();
         }
     }
-
 }

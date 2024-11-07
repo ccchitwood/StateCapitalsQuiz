@@ -65,5 +65,9 @@ public class QuestionDBHelper extends SQLiteOpenHelper {
         db.execSQL("drop table if exists " + TABLE_QUESTIONS);
         onCreate(db);
     }
+
+    public String getDbName() {
+        return TABLE_QUESTIONS;
+    }
 }
 

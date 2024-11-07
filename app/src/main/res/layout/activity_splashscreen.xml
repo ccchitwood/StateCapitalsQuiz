@@ -24,17 +24,26 @@
         android:paddingRight="12sp"
         android:text="Test your knowledge on state capitals in a six question quiz! Click on Start Quiz to begin a new quiz, or click on Past Quizzes to view your past results!" />
 
-    <Button
-        android:id="@+id/button"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="24sp"
-        android:text="Start Quiz" />
+        android:orientation="horizontal">
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="24sp"
-        android:text="Past Quizzes" />
+        <Button
+            android:id="@+id/button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="24sp"
+            android:layout_marginBottom="24sp"
+            android:text="Start Quiz" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="24sp"
+            android:layout_marginBottom="24sp"
+            android:text="Past Quizzes" />
+    </LinearLayout>
+
 </LinearLayout>

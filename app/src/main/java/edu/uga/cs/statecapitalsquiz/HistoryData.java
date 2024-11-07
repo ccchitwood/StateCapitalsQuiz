@@ -52,7 +52,7 @@ public class HistoryData {
 
                 while( cursor.moveToNext() ) {
 
-                    if( cursor.getColumnCount() >= 5) {
+                    if( cursor.getColumnCount() >= 3) {
 
                         // get all attribute values of this job lead
                         columnIndex = cursor.getColumnIndex(HistoryDBHelper.HISTORY_COLUMN_ID );
