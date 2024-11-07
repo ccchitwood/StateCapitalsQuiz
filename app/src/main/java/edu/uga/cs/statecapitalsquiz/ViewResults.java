@@ -12,9 +12,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class ViewResults extends AppCompatActivity {
@@ -32,7 +30,7 @@ public class ViewResults extends AppCompatActivity {
         android.widget.TableRow.LayoutParams layoutParams =
                 new TableRow.LayoutParams( TableRow.LayoutParams.WRAP_CONTENT,
                         TableRow.LayoutParams.WRAP_CONTENT );
-        layoutParams.setMargins(50, 0, 50, 0);
+        layoutParams.setMargins(20, 0, 20, 0);
 
         List<History> quizHistory = historyData.retrieveAllResults();
         Log.d("size of quiz history", quizHistory.size() + ""); // Returns 0
@@ -41,11 +39,8 @@ public class ViewResults extends AppCompatActivity {
 
             TextView score = new TextView(this);
             score.setText(String.format("%d", quizHistory.get(i).getScore()) + "/6");
-            Date date = new Date(quizHistory.get(i).getDate() * 1000L);
-            SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-            String formattedDate = dateFormatter.format(date);
             TextView time = new TextView(this);
-            time.setText(formattedDate);
+            time.setText(String.format("%d", quizHistory.get(i).getDate()));
 
             tableRow.addView(score, layoutParams);
             tableRow.addView(time, layoutParams);
