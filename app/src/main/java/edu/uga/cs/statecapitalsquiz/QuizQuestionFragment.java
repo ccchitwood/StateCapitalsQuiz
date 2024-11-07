@@ -24,6 +24,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import javax.xml.transform.Result;
+
 public class QuizQuestionFragment extends Fragment {
 
     private TextView stateQuestion;
@@ -32,6 +34,7 @@ public class QuizQuestionFragment extends Fragment {
     private RadioButton answerThree;
     private static Set<Integer> usedQuestions = new HashSet<>();
     private static int correctAnswerCount = 0;
+    private HistoryData historyData;
 
     public QuizQuestionFragment() {
     // empty constructor
@@ -111,11 +114,11 @@ public class QuizQuestionFragment extends Fragment {
             if (viewPager != null) {
                 int nextPosition = viewPager.getCurrentItem() + 1;
                 if (nextPosition == 6) {
-                    Intent intent = new Intent(getActivity(), EndScreen.class);
-                    intent.putExtra("correctAnswerCount", correctAnswerCount);
-                    correctAnswerCount = 0;
-                    usedQuestions.clear();
-                    startActivity(intent);
+                    // open results database for saving
+                    historyData = new HistoryData(getActivity());
+                    historyData.open();
+
+                    new ResultSaver(historyData, correctAnswerCount).execute();
                 }
                 viewPager.setCurrentItem(nextPosition, true);  // true for smooth scrolling
             }
@@ -123,4 +126,41 @@ public class QuizQuestionFragment extends Fragment {
     }
 
     public static int getNumberOfVersions() { return 6; }
+
+    public class ResultSaver extends AsyncTask<History, History> {
+
+        private HistoryData historyData;
+        private int score;
+
+        public ResultSaver(HistoryData historyData, int score) {
+            this.historyData = historyData;
+            this.score = score;
+        }
+
+        protected History doInBackground(History... histories) {
+            History history = new History();
+            int currentDate = (int) (System.currentTimeMillis() / 1000);
+            history.setDate(currentDate);
+            history.setScore(score);
+            historyData.storeResults(history);
+
+            return new History();
+        }
+
+        protected void onPostExecute (History history) {
+            Intent intent = new Intent(getActivity(), EndScreen.class);
+            intent.putExtra("correctAnswerCount", correctAnswerCount);
+            correctAnswerCount = 0;
+            usedQuestions.clear();
+            startActivity(intent);
+        }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (historyData != null) {
+            historyData.close();
+        }
+    }
 }

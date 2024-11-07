@@ -20,9 +20,6 @@ public class EndScreen extends AppCompatActivity {
         Button pastQuizzesButton = findViewById(R.id.button4);
         TextView quizScore = findViewById(R.id.textView5);
 
-        historyData = new HistoryData(this);
-        historyData.open();
-
         Intent intent = getIntent();
         int score = intent.getIntExtra("correctAnswerCount", 0);
 
@@ -45,7 +42,8 @@ public class EndScreen extends AppCompatActivity {
         pastQuizzesButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new ResultSaver(historyData, score).execute();
+                Intent intent = new Intent(EndScreen.this, ViewResults.class);
+                startActivity(intent);
             }
         });
     }
@@ -55,33 +53,6 @@ public class EndScreen extends AppCompatActivity {
         super.onDestroy();
         if (historyData != null) {
             historyData.close();
-        }
-    }
-
-    public class ResultSaver extends AsyncTask<History, History> {
-
-        private HistoryData historyData;
-        private int score;
-
-        public ResultSaver(HistoryData historyData, int score) {
-            this.historyData = historyData;
-            this.score = score;
-        }
-
-        protected History doInBackground(History... histories) {
-            History history = new History();
-            int currentDate = (int) (System.currentTimeMillis() / 1000);
-            history.setDate(currentDate);
-            history.setScore(score);
-            historyData.storeResults(history);
-
-            return new History();
-        }
-
-        protected void onPostExecute (History history) {
-            Intent intent = new Intent(EndScreen.this, ViewResults.class);
-            startActivity(intent);
-            finish();
         }
     }
 }
